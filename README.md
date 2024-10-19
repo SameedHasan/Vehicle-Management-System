@@ -14,23 +14,91 @@ pnpm dev
 bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+# PostgreSQL Setup Guide
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+## Step 1: Create User and Database
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+1. Switch to the PostgreSQL user:
+   ```bash
+   sudo -i -u postgres
+   ```
+2. Open the PostgreSQL command line:
+   ```bash
+   psql
+   ```
+3. Create a new user:
+   ```sql
+   CREATE USER sameedhasan WITH PASSWORD 'sameed@123';
+   ```
+4. Create a new database:
+   ```sql
+   CREATE DATABASE sameeddb;
+   ```
+5. Grant all privileges on the new database to the user:
+   ```sql
+   GRANT ALL PRIVILEGES ON DATABASE sameeddb TO sameedhasan;
+   ```
+6. Exit the PostgreSQL command line:
+   ```sql
+   \q
+   ```
+7. Exit the PostgreSQL user:
+   ```bash
+   exit
+   ```
 
-## Learn More
+## Step 2: Configure PostgreSQL to Listen on All Addresses
 
-To learn more about Next.js, take a look at the following resources:
+1. Open the PostgreSQL configuration file:
+   ```bash
+   sudo nano /etc/postgresql/12/main/postgresql.conf
+   ```
+2. Look for the line that starts with `listen_addresses` and change it to:
+   ```plaintext
+   listen_addresses = '*'
+   ```
+   Make sure this line is uncommented.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Step 3: Allow Remote Connections
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+1. Open the host-based authentication configuration file:
+   ```bash
+   sudo nano /etc/postgresql/14/main/pg_hba.conf
+   ```
+2. Add the following line at the end of the file to allow remote connections (replace `your-server-ip` with your server's IP or `0.0.0.0/0` to allow all IPs):
+   ```plaintext
+   host    all             all             0.0.0.0/0               md5
+   ```
 
-## Deploy on Vercel
+## Step 4: Restart PostgreSQL
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+1. Restart PostgreSQL to apply changes:
+   ```bash
+   sudo systemctl restart postgresql
+   ```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+## Step 5: Create the Users Table
+
+1. Connect to the database:
+   ```bash
+   psql -U sameedhasan -d sameeddb
+   ```
+2. Create a table named `users`:
+   ```sql
+   CREATE TABLE users (
+       id SERIAL PRIMARY KEY,
+       name VARCHAR(100),
+       email VARCHAR(100) UNIQUE NOT NULL,
+       password VARCHAR(100) NOT NULL,
+       created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+   );
+   ```
+
+## Step 6: Insert Data into the Users Table
+
+1. Insert a sample user into the `users` table:
+   ```sql
+   INSERT INTO users (name, email, password)
+   VALUES ('John Doe', 'john@example.com', 'password123');
+   ```
+# Vehicle-Management-System
