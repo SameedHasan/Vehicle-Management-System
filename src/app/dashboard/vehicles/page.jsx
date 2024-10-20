@@ -4,51 +4,17 @@ import Link from "next/link";
 import Image from "next/image";
 import Search from "@/components/ui/dashboard/search/Search";
 import Pagination from "@/components/ui/dashboard/pagination/Pagination";
-// import ReactTable from "@/components/ui/dashboard/table";
+import { fetchUsers, AddUser, deleteUser } from "@/lib/actions";
+import AddButton from "@/components/ui/dashboard/button/AddButton";
+import ReactTable from "@/components/ui/dashboard/table";
 
-const Vehicles = () => {
-  const users = [
-    {
-      name: "John Doe",
-      email: "john.doe@example.com",
-      createdAt: "2023-01-15",
-      role: "Admin",
-      status: "done",
-      action: "edit",
-    },
-    {
-      name: "Jane Smith",
-      email: "jane.smith@example.com",
-      createdAt: "2023-02-20",
-      role: "User",
-      status: "pending",
-      action: "delete",
-    },
-    {
-      name: "Robert Brown",
-      email: "robert.brown@example.com",
-      createdAt: "2022-12-05",
-      role: "Manager",
-      status: "cancelled",
-      action: "edit",
-    },
-    {
-      name: "Emily Johnson",
-      email: "emily.johnson@example.com",
-      createdAt: "2023-03-10",
-      role: "User",
-      status: "done",
-      action: "view",
-    },
-    {
-      name: "Michael Green",
-      email: "michael.green@example.com",
-      createdAt: "2021-07-25",
-      role: "Admin",
-      status: "cancelled",
-      action: "delete",
-    },
-  ];
+export default async function Vehicles() {
+  const { rows } = await fetchUsers();
+  console.log("data", rows);
+
+  const AddUserFunc = () => {
+    console.log('"first"', "first");
+  };
 
   return (
     <div className={styles.container}>
@@ -57,9 +23,10 @@ const Vehicles = () => {
         <Link href="/dashboard/vehicles/add">
           <button className={styles.addButton}>Add New</button>
         </Link>
+        {/* <AddButton addVehicle={AddUser} /> */}
       </div>
 
-      {/* <ReactTable /> */}
+      <ReactTable />
       <table className={styles.table}>
         <thead>
           <tr>
@@ -72,7 +39,7 @@ const Vehicles = () => {
           </tr>
         </thead>
         <tbody>
-          {users.map((user) => (
+          {rows.map((user) => (
             <tr key={user.id}>
               <td>
                 <div className={styles.user}>
@@ -89,10 +56,7 @@ const Vehicles = () => {
                   <Link href={`/dashboard/users/${user.id}`}>
                     <button className={`${styles.button} ${styles.view}`}>View</button>
                   </Link>
-                  <form
-
-                  // action={deleteUser}
-                  >
+                  <form action={deleteUser}>
                     <input type="hidden" name="id" value={user.id} />
                     <button className={`${styles.button} ${styles.delete}`}>Delete</button>
                   </form>
@@ -105,6 +69,4 @@ const Vehicles = () => {
       <Pagination count={10} />
     </div>
   );
-};
-
-export default Vehicles;
+}
