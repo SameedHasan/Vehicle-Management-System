@@ -3,6 +3,11 @@
     --bgSoft: #182237;
     --text: white;
     --textSoft: #b7bac1;
+    --buttonColor: #4caf50;
+    --buttonColor2: #ff9800;
+    --buttonColor3: #2196f3;
+    --buttonColor4: #e91e63;
+    --buttonHover: #45a049
 }
 
 * {
@@ -67,4 +72,63 @@ a {
 
 .homeLink:hover {
     background-color: #005bb5;
+}
+
+/* .red {
+    background-color: var(--bgSoft);
+    color: var(--text);
+} */
+
+
+
+.ant-table .ant-table-container .ant-table-content table .ant-table-cell {
+    background-color: var(--bgSoft);
+    color: var(--text);
+}
+
+.ant-table-wrapper .ant-table {
+    background-color: var(--bgSoft);
+}
+
+.ant-pagination .ant-pagination-prev {
+    background-color: var(--bgSoft);
+}
+
+.ant-pagination .ant-pagination-prev button {
+    color: var(--text);
+}
+
+.ant-pagination .ant-pagination-next {
+    background-color: var(--bgSoft);
+    color: var(--text);
+}
+
+.ant-pagination .ant-pagination-next button {
+    color: var(--text);
+}
+
+.ant-pagination .ant-pagination-item {
+    background-color: var(--bgSoft);
+}
+
+.ant-pagination .ant-pagination-item a {
+    color: var(--text);
+}
+
+.ant-pagination .ant-pagination-jump-next .ant-pagination-item-container .ant-pagination-item-ellipsis {
+    color: var(--text);
+}
+
+.ant-pagination .ant-pagination-jump-prev .ant-pagination-item-container .ant-pagination-item-ellipsis {
+    color: var(--text);
+}
+
+.ant-select-selector {
+    background-color: var(--bgSoft) !important;
+    color: var(--text) !important;
+    border: none !important;
+}
+
+.ant-select-single.ant-select-open .ant-select-selection-item {
+    color: var(--text) !important;
 }

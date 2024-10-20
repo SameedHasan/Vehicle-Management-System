@@ -13,11 +13,15 @@
 
 .addButton {
     padding: 10px;
-    background-color: #5d57c9;
+    background-color: var(--buttonColor);
     color: var(--text);
     border: none;
     border-radius: 5px;
     cursor: pointer;
+}
+
+.addButton:hover {
+    background-color: var(--buttonHover);
 }
 
 .table {

@@ -1,9 +1,21 @@
+.footer {
+    position: sticky;
+    bottom: 0;
+    background-color: var(--bg);
+    height: 50px;
+    margin-bottom: -20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
 .container {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    margin-top: 30px;
-    color: var(--textSoft);
+    gap: 5px;
+
+
 }
 
 .logo {
