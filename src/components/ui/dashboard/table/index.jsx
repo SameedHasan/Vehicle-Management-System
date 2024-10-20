@@ -1,5 +1,3 @@
-// app/users/page.jsx (ReactTable Component)
-
 "use client";
 import React, { useEffect, useState } from "react";
 import { Table } from "antd";
@@ -27,24 +25,27 @@ const getParams = (params) => ({
   page: params.pagination?.current,
   sortField: params.sortField,
   sortOrder: params.sortOrder,
-  ...params,
+  searchTerm: params.searchTerm, // Include the search term in the query parameters
 });
 
-const ReactTable = () => {
+const ReactTable = ({ searchTerm }) => {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
   const [tableParams, setTableParams] = useState({
     pagination: {
       current: 1,
-      pageSize: 2,
+      pageSize: 10,
     },
+    searchTerm: searchTerm, // Add the searchTerm to table parameters
   });
 
   // Fetch data from your custom API
   const fetchData = () => {
     setLoading(true);
 
-    fetch(`/api/vehicle?${qs.stringify(getParams(tableParams))}`)
+    const queryParams = getParams({ ...tableParams, searchTerm });
+
+    fetch(`/api/vehicle?${qs.stringify(queryParams)}`)
       .then((res) => res.json())
       .then(({ data, total }) => {
         setData(data); // Update the table data
@@ -62,18 +63,34 @@ const ReactTable = () => {
       });
   };
 
+  // Fetch data when the table parameters (pagination, sorting, search term) change
+  useEffect(() => {
+    // Whenever the searchTerm or tableParams change, we refetch the data
+    setTableParams((prevParams) => ({
+      ...prevParams,
+      searchTerm, // Ensure the latest search term is reflected in tableParams
+    }));
+  }, [searchTerm]);
+
   // Fetch data when the table parameters (pagination, sorting) change
   useEffect(() => {
     fetchData();
-  }, [tableParams.pagination?.current, tableParams.pagination?.pageSize, tableParams.sortOrder, tableParams.sortField]);
+  }, [
+    tableParams.pagination?.current,
+    tableParams.pagination?.pageSize,
+    tableParams.sortOrder,
+    tableParams.sortField,
+    tableParams.searchTerm, // Make sure to include searchTerm here
+  ]);
 
-  // Handle table changes (pagination, filtering, sorting)
+  // Update the table parameters and reset the data on table change
   const handleTableChange = (pagination, filters, sorter) => {
     setTableParams({
       pagination,
       filters,
       sortOrder: sorter.order,
       sortField: sorter.field,
+      searchTerm: tableParams.searchTerm, // Retain the searchTerm in tableParams
     });
 
     // Reset data when the page size changes

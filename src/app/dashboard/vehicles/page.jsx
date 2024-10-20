@@ -8,13 +8,10 @@ import { fetchUsers, AddUser, deleteUser } from "@/lib/actions";
 import AddButton from "@/components/ui/dashboard/button/AddButton";
 import ReactTable from "@/components/ui/dashboard/table";
 
-export default async function Vehicles() {
-  const { rows } = await fetchUsers();
-  console.log("data", rows);
+export default async function Vehicles({ searchParams }) {
+  const q = searchParams?.q || "";
 
-  const AddUserFunc = () => {
-    console.log('"first"', "first");
-  };
+  const { rows } = await fetchUsers();
 
   return (
     <div className={styles.container}>
@@ -26,7 +23,7 @@ export default async function Vehicles() {
         {/* <AddButton addVehicle={AddUser} /> */}
       </div>
 
-      <ReactTable />
+      <ReactTable searchTerm={q} />
       <table className={styles.table}>
         <thead>
           <tr>
