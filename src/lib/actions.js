@@ -1,7 +1,8 @@
 "use server";
 import { revalidatePath } from "next/cache";
 import { query } from "./db";
-
+import { redirect } from "next/navigation";
+import bcrypt from "bcrypt";
 export const fetchUsers = async () => {
   try {
     const result = await query("SELECT * FROM users"); // Assuming `users` is the table name
@@ -12,20 +13,33 @@ export const fetchUsers = async () => {
   }
 };
 
-export const AddUser = async () => {
+export const AddUser = async (formData) => {
+  const { name, email, password } = Object.fromEntries(formData);
+
+  // Ensure you validate inputs (e.g., not empty, valid email, etc.)
+  if (!name || !email || !password) {
+    throw new Error("All fields (name, email, password) are required!");
+  }
+
+  const salt = await bcrypt.genSalt(10);
+  const hashedPassword = await bcrypt.hash(password, salt);
+
   try {
-    const result = await query("INSERT INTO users (name, email, password) VALUES ('Faisal', 'faisal@example.com', 'password123')");
-    console.log("result", result);
-    revalidatePath("/dashboard/vehicles");
-    return result;
+    // Use parameterized query to prevent SQL injection
+    const result = await query(
+      `INSERT INTO users (name, email, password) VALUES ($1, $2, $3) RETURNING *`,
+      [name, email, hashedPassword] // Pass values as parameters to avoid SQL injection
+    );
   } catch (err) {
-    console.log(err);
+    console.error("Failed to add user:", err.message);
     throw new Error("Failed to add user!");
   }
+  revalidatePath("/dashboard/vehicles");
+  redirect("/dashboard/vehicles");
 };
 
-export const deleteUser = async (formData) => {
-  const { id } = Object.fromEntries(formData);
+export const deleteUser = async (id) => {
+  // const { id } = Object.fromEntries(formData);
 
   try {
     const result = await query("DELETE FROM users WHERE id = $1 RETURNING *", [id]);
@@ -39,6 +53,19 @@ export const deleteUser = async (formData) => {
     console.log(err);
     throw new Error("Failed to delete user!");
   }
+  revalidatePath("/dashboard/vehicles");
+};
 
-  revalidatePath("/dashboard/products");
+export const authenticate = async (prevState, formData) => {
+  const { username, password } = Object.fromEntries(formData);
+
+  try {
+    // await signIn("credentials", { username, password });
+    redirect("/dashboard");
+  } catch (err) {
+    if (err.message.includes("CredentialsSignin")) {
+      return "Wrong Credentials";
+    }
+    throw err;
+  }
 };

@@ -1,23 +1,8 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import { Table } from "antd";
+import { Space, Table } from "antd";
 import qs from "qs";
-
-// Define the columns for the table
-const columns = [
-  {
-    title: "Name",
-    dataIndex: "name",
-    sorter: true,
-    width: "20%",
-  },
-  {
-    title: "Email",
-    dataIndex: "email",
-    width: "30%",
-    sorter: true,
-  },
-];
+import { deleteUser } from "@/lib/actions";
 
 // Helper function to build API request query parameters
 const getParams = (params) => ({
@@ -39,7 +24,7 @@ const ReactTable = ({ searchTerm }) => {
     searchTerm: searchTerm, // Add the searchTerm to table parameters
   });
 
-  // Fetch data from your custom API
+  // Function to fetch data from your API
   const fetchData = () => {
     setLoading(true);
 
@@ -49,7 +34,7 @@ const ReactTable = ({ searchTerm }) => {
       .then((res) => res.json())
       .then(({ data, total }) => {
         setData(data); // Update the table data
-        setLoading(false); // Stop the loading indicator
+        setLoading(false); // Stop loading indicator
         setTableParams({
           ...tableParams,
           pagination: {
@@ -61,6 +46,16 @@ const ReactTable = ({ searchTerm }) => {
       .catch(() => {
         setLoading(false); // Stop loading on error
       });
+  };
+
+  // Handle delete operation and refetch data
+  const handleDelete = async (id) => {
+    try {
+      await deleteUser(id); // Perform the delete operation
+      fetchData(); // Re-fetch the data to reflect the deletion
+    } catch (error) {
+      console.error("Error deleting user:", error);
+    }
   };
 
   // Fetch data when the table parameters (pagination, sorting, search term) change
@@ -98,6 +93,37 @@ const ReactTable = ({ searchTerm }) => {
       setData([]);
     }
   };
+
+  // Define the columns for the table
+  const columns = [
+    {
+      title: "Name",
+      dataIndex: "name",
+      sorter: true,
+      width: "20%",
+    },
+    {
+      title: "Email",
+      dataIndex: "email",
+      width: "30%",
+      sorter: true,
+    },
+    {
+      title: "Password",
+      dataIndex: "password",
+      width: "30%",
+      sorter: true,
+    },
+    {
+      title: "Action",
+      key: "action",
+      render: (_, record) => (
+        <Space size="middle">
+          <a onClick={() => handleDelete(record.id)}>Delete</a>
+        </Space>
+      ),
+    },
+  ];
 
   return (
     <div style={{ margin: "20px" }}>
