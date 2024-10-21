@@ -1,6 +1,7 @@
 import React from "react";
 import { MdDashboard, MdWork, MdAnalytics, MdPeople, MdOutlineSettings, MdHelpCenter, MdLogout } from "react-icons/md";
 import { IoCarSport } from "react-icons/io5";
+import { FaUsers } from "react-icons/fa6";
 import styles from "./sidebar.module.css";
 import Image from "next/image";
 import MenuLink from "./menuLink/MenuLink";
@@ -18,6 +19,11 @@ const menuItems = [
         title: "Vehicles",
         path: "/dashboard/vehicles",
         icon: <IoCarSport />,
+      },
+      {
+        title: "Users",
+        path: "/dashboard/users",
+        icon: <FaUsers />,
       },
     ],
   },
@@ -72,17 +78,6 @@ const Sidebar = () => {
           </li>
         ))}
       </ul>
-      {/* <form
-      // action={async () => {
-      //   "use server";
-      //   await signOut();
-      // }}
-      >
-        <button className={styles.logout}>
-          <MdLogout />
-          Logout
-        </button>
-      </form> */}
       <Logout styles={styles} />
     </div>
   );

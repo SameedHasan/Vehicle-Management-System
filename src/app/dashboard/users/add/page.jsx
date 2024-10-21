@@ -1,7 +1,7 @@
 import React from "react";
 import styles from "@/components/ui/dashboard/vehicle/addvehicle.module.css";
 import { AddUser } from "@/lib/actions";
-const AddVehiclePage = () => {
+const AddUserPage = () => {
   return (
     <div className={styles.container}>
       <form action={AddUser} className={styles.form}>
@@ -25,4 +25,4 @@ const AddVehiclePage = () => {
   );
 };
 
-export default AddVehiclePage;
+export default AddUserPage;
