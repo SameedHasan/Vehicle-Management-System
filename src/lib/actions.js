@@ -38,8 +38,8 @@ export const AddUser = async (formData) => {
     console.error("Failed to add user:", err.message);
     throw new Error("Failed to add user!");
   }
-  revalidatePath("/dashboard/vehicles");
-  redirect("/dashboard/vehicles");
+  revalidatePath("/dashboard/users");
+  redirect("/dashboard/users");
 };
 
 export const deleteUser = async (id) => {
