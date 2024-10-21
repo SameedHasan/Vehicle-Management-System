@@ -3,6 +3,10 @@ import { revalidatePath } from "next/cache";
 import { query } from "./db";
 import { redirect } from "next/navigation";
 import bcrypt from "bcrypt";
+import { signIn } from "next-auth/react";
+// import { signIn } from "@/auth";
+// import { signIn } from "next-auth/react";
+
 export const fetchUsers = async () => {
   try {
     const result = await query("SELECT * FROM users"); // Assuming `users` is the table name
@@ -57,11 +61,14 @@ export const deleteUser = async (id) => {
 };
 
 export const authenticate = async (prevState, formData) => {
-  const { username, password } = Object.fromEntries(formData);
-
+  const { email, password } = Object.fromEntries(formData);
   try {
-    // await signIn("credentials", { username, password });
-    redirect("/dashboard");
+    await signIn("credentials", {
+      email: "sameedh41@gmail.com",
+      password: "sameed",
+      redirect: true,
+    });
+    // redirect("/dashboard");
   } catch (err) {
     if (err.message.includes("CredentialsSignin")) {
       return "Wrong Credentials";

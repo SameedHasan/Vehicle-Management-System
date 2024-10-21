@@ -4,6 +4,7 @@ import { IoCarSport } from "react-icons/io5";
 import styles from "./sidebar.module.css";
 import Image from "next/image";
 import MenuLink from "./menuLink/MenuLink";
+import Logout from "@/components/Logout";
 const menuItems = [
   {
     title: "Vehicle Management",
@@ -71,7 +72,7 @@ const Sidebar = () => {
           </li>
         ))}
       </ul>
-      <form
+      {/* <form
       // action={async () => {
       //   "use server";
       //   await signOut();
@@ -81,7 +82,8 @@ const Sidebar = () => {
           <MdLogout />
           Logout
         </button>
-      </form>
+      </form> */}
+      <Logout styles={styles} />
     </div>
   );
 };
