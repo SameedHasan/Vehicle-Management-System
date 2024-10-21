@@ -29,10 +29,71 @@ model User {
 }
 
 model Vehicle {
-  id        Int      @id @default(autoincrement())
-  make      String
-  model     String
-  year      Int
-  ownerId   Int
-  createdAt DateTime @default(now())
+  id              Int      @id @default(autoincrement())
+  make            String
+  model           String
+  type            String
+  chassisNo       String   @map("chassis_no")
+  engineNo        String   @map("engine_no")
+  regNo           String   @map("reg_no")
+  color           String
+  purchaseDate    DateTime @map("purchase_date")
+  price           Float
+  purchaseOrderNo String   @map("purchase_order_no")
+  fuelCapacity    Float    @map("fuel_capacity")
+  status          String // e.g., 'allotted', 'unallotted'
+
+  allotments      VehicleAllotment[]
+  maintenanceLogs VehicleMaintenance[]
+  logbookEntries  VehicleLogbook[]
+}
+
+model Employee {
+  id        Int    @id @default(autoincrement())
+  firstName String @map("first_name")
+  lastName  String @map("last_name")
+  email     String
+  phone     String
+
+  allotments VehicleAllotment[]
+}
+
+model VehicleAllotment {
+  id               Int       @id @default(autoincrement())
+  vehicleId        Int
+  employeeId       Int
+  allotmentDate    DateTime  @map("allotment_date")
+  returnDate       DateTime? @map("return_date")
+  allotmentOrderNo String    @map("allotment_order_no")
+  approvalStatus   String    @map("approval_status")
+  comments         String?
+
+  vehicle  Vehicle  @relation(fields: [vehicleId], references: [id])
+  employee Employee @relation(fields: [employeeId], references: [id])
+}
+
+model VehicleMaintenance {
+  id              Int      @id @default(autoincrement())
+  vehicleId       Int
+  maintenanceDate DateTime @map("maintenance_date")
+  description     String
+  cost            Float
+  serviceCenter   String   @map("service_center")
+
+  vehicle Vehicle @relation(fields: [vehicleId], references: [id])
+}
+
+model VehicleLogbook {
+  id              Int      @id @default(autoincrement())
+  vehicleId       Int
+  logDate         DateTime @map("log_date")
+  startOdometer   Int      @map("start_odometer")
+  endOdometer     Int      @map("end_odometer")
+  distanceCovered Int      @map("distance_covered")
+  purpose         String
+  driverName      String   @map("driver_name")
+  fuelConsumed    Float    @map("fuel_consumed")
+  comments        String?
+
+  vehicle Vehicle @relation(fields: [vehicleId], references: [id])
 }
