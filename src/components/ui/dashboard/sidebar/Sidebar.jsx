@@ -1,5 +1,5 @@
 import React from "react";
-import { MdDashboard, MdWork, MdAnalytics, MdPeople, MdOutlineSettings, MdHelpCenter, MdLogout } from "react-icons/md";
+import { MdDashboard, MdWork, MdAnalytics, MdPeople, MdOutlineSettings, MdHelpCenter, MdLogout, MdBallot } from "react-icons/md";
 import { IoCarSport } from "react-icons/io5";
 import { FaUsers } from "react-icons/fa6";
 import styles from "./sidebar.module.css";
@@ -16,14 +16,19 @@ const menuItems = [
         icon: <MdDashboard />,
       },
       {
+        title: "Users",
+        path: "/dashboard/users",
+        icon: <FaUsers />,
+      },
+      {
         title: "Vehicles",
         path: "/dashboard/vehicles",
         icon: <IoCarSport />,
       },
       {
-        title: "Users",
-        path: "/dashboard/users",
-        icon: <FaUsers />,
+        title: "Allotments",
+        path: "/dashboard/allotments",
+        icon: <MdBallot />,
       },
     ],
   },

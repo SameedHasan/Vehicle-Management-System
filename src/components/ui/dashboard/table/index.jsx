@@ -1,6 +1,6 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import { Space, Table } from "antd";
+import { Button, Space, Table } from "antd";
 import qs from "qs";
 import { deleteUser } from "@/lib/actions";
 
@@ -97,21 +97,23 @@ const ReactTable = ({ searchTerm }) => {
   // Define the columns for the table
   const columns = [
     {
+      title: "Id",
+      dataIndex: "id",
+      sorter: true,
+    },
+    {
       title: "Name",
       dataIndex: "name",
       sorter: true,
-      width: "20%",
     },
     {
       title: "Email",
       dataIndex: "email",
-      width: "30%",
       sorter: true,
     },
     {
       title: "Password",
       dataIndex: "password",
-      width: "30%",
       sorter: true,
     },
     {
@@ -119,7 +121,9 @@ const ReactTable = ({ searchTerm }) => {
       key: "action",
       render: (_, record) => (
         <Space size="middle">
-          <a onClick={() => handleDelete(record.id)}>Delete</a>
+          <Button color="danger" variant="solid" onClick={() => handleDelete(record.id)}>
+            Delete
+          </Button>
         </Space>
       ),
     },
