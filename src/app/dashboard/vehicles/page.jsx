@@ -6,6 +6,7 @@ import styles from "@/components/ui/dashboard/users/users.module.css";
 import Search from "@/components/ui/dashboard/search/Search";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { Suspense } from "react";
 
 const VehiclesPage = () => {
   const router = useRouter();
@@ -70,32 +71,34 @@ const VehiclesPage = () => {
   ];
 
   return (
-    <div className={styles.container}>
-      <div className={styles.top}>
-        <Search placeholder="Search for a user..." />
-        <Link href="/dashboard/vehicles/add">
-          <button className={styles.addButton}>Add New Vehicle</button>
-        </Link>
-        {/* <AddButton addVehicle={AddUser} /> */}
-      </div>
+    <Suspense>
+      <div className={styles.container}>
+        <div className={styles.top}>
+          <Search placeholder="Search for a user..." />
+          <Link href="/dashboard/vehicles/add">
+            <button className={styles.addButton}>Add New Vehicle</button>
+          </Link>
+          {/* <AddButton addVehicle={AddUser} /> */}
+        </div>
 
-      <Table
-        rowClassName="pointer"
-        columns={vehicleColumns}
-        rowKey={(record) => record.id} // Assuming your API returns a field called 'id'
-        dataSource={vehicles_data}
-        onRow={(record, rowIndex) => {
-          return {
-            onClick: (event) => {
-              router.push(`/dashboard/vehicles/${record.id}`);
-            },
-          };
-        }}
-        // pagination={tableParams.pagination}
-        // loading={loading}
-        // onChange={handleTableChange}
-      />
-    </div>
+        <Table
+          rowClassName="pointer"
+          columns={vehicleColumns}
+          rowKey={(record) => record.id} // Assuming your API returns a field called 'id'
+          dataSource={vehicles_data}
+          onRow={(record, rowIndex) => {
+            return {
+              onClick: (event) => {
+                router.push(`/dashboard/vehicles/${record.id}`);
+              },
+            };
+          }}
+          // pagination={tableParams.pagination}
+          // loading={loading}
+          // onChange={handleTableChange}
+        />
+      </div>
+    </Suspense>
   );
 };
 

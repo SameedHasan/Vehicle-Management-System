@@ -140,3 +140,8 @@ a {
     color: var(--textSoft);
     font-weight: bold;
 }
+
+.ant-empty .ant-empty-description {
+    color: var(--textSoft);
+    font-weight: bold;
+}

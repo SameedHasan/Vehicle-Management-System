@@ -1,10 +1,12 @@
 import React from "react";
 import styles from "./tabs.module.css";
+import { Empty } from "antd";
 
 const Maintainence = () => {
   return (
     <div className={styles.container}>
       <h2 className={styles.heading}>Maintainence Details</h2>
+      <Empty />
       {/* <div className={styles.gridContainer}>
         <div className={styles.gridItem}>
           <strong>Allotment Date:</strong> <span>{allotment.allotment_date}</span>
