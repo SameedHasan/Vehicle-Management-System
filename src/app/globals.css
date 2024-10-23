@@ -26,6 +26,9 @@ a {
     text-decoration: none;
 }
 
+.pointer {
+    cursor: pointer;
+}
 
 /* pages/404.module.css */
 
@@ -131,4 +134,9 @@ a {
 
 .ant-select-single.ant-select-open .ant-select-selection-item {
     color: var(--text) !important;
+}
+
+.ant-tabs .ant-tabs-tab {
+    color: var(--textSoft);
+    font-weight: bold;
 }

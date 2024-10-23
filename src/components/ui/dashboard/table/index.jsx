@@ -135,7 +135,7 @@ const ReactTable = ({ searchTerm }) => {
         columns={columns}
         rowKey={(record) => record.id} // Assuming your API returns a field called 'id'
         dataSource={data}
-        pagination={tableParams.pagination}
+        pagination={{ ...tableParams.pagination, hideOnSinglePage: true }}
         loading={loading}
         onChange={handleTableChange}
       />

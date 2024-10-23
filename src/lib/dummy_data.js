@@ -44,6 +44,21 @@ export const vehicles_data = [
     fuel_capacity: 45.0,
     status: "unallotted",
   },
+  {
+    id: 4,
+    make: "Tesla",
+    model: "Model 3",
+    type: "Electric",
+    chassis_no: "TS234JKL9876543",
+    engine_no: "ENG54321678",
+    reg_no: "EV-1234",
+    color: "Red",
+    purchase_date: "2022-07-10",
+    price: 50000.0,
+    purchase_order_no: "PO12348",
+    fuel_capacity: 0.0, // Electric Vehicle
+    status: "allotted",
+  },
 ];
 
 export const allotment_data = [
@@ -52,7 +67,7 @@ export const allotment_data = [
     vehicle_id: 2,
     employee_id: 57,
     allotment_date: "2023-09-10",
-    return_date: null,
+    return_date: null, // Active allotment
     allotment_order_no: "A1234",
     approval_status: "approved",
     comments: "Assigned for project work.",
@@ -62,10 +77,40 @@ export const allotment_data = [
     vehicle_id: 1,
     employee_id: 57,
     allotment_date: "2022-12-01",
-    return_date: "2023-01-15",
+    return_date: "2023-01-15", // Completed allotment
     allotment_order_no: "A1235",
     approval_status: "completed",
     comments: "Temporary allotment for site visit.",
+  },
+  {
+    id: 3,
+    vehicle_id: 1,
+    employee_id: 42,
+    allotment_date: "2023-08-05",
+    return_date: null, // Active allotment
+    allotment_order_no: "A1236",
+    approval_status: "approved",
+    comments: "Assigned for office commute.",
+  },
+  {
+    id: 4,
+    vehicle_id: 3,
+    employee_id: 72,
+    allotment_date: "2023-06-15",
+    return_date: "2023-07-01", // Completed allotment
+    allotment_order_no: "A1237",
+    approval_status: "completed",
+    comments: "Short-term assignment.",
+  },
+  {
+    id: 5,
+    vehicle_id: 4,
+    employee_id: 61,
+    allotment_date: "2023-10-01",
+    return_date: null, // Active allotment
+    allotment_order_no: "A1238",
+    approval_status: "approved",
+    comments: "Long-term allotment for CEO.",
   },
 ];
 
@@ -85,6 +130,22 @@ export const maintenance_data = [
     description: "Brake pad replacement",
     cost: 300.0,
     service_center: "QuickFix Garage",
+  },
+  {
+    id: 3,
+    vehicle_id: 2,
+    maintenance_date: "2023-07-15",
+    description: "Engine diagnostics and tuning",
+    cost: 450.0,
+    service_center: "HighTech Motors",
+  },
+  {
+    id: 4,
+    vehicle_id: 4,
+    maintenance_date: "2023-10-05",
+    description: "Battery health check and software update",
+    cost: 200.0,
+    service_center: "Tesla Service Center",
   },
 ];
 
@@ -112,5 +173,29 @@ export const logs_data = [
     driver_name: "Jane Smith",
     fuel_consumed: 15.0,
     comments: "Heavy traffic on the way back.",
+  },
+  {
+    id: 3,
+    vehicle_id: 3,
+    log_date: "2023-08-30",
+    start_odometer: 17500,
+    end_odometer: 17800,
+    distance_covered: 300,
+    purpose: "Client visit out of town",
+    driver_name: "Alice Green",
+    fuel_consumed: 25.0,
+    comments: "Good fuel efficiency on the highway.",
+  },
+  {
+    id: 4,
+    vehicle_id: 4,
+    log_date: "2023-10-06",
+    start_odometer: 1000,
+    end_odometer: 1100,
+    distance_covered: 100,
+    purpose: "Test drive after software update",
+    driver_name: "Tesla Engineer",
+    fuel_consumed: 0.0, // Electric Vehicle
+    comments: "No issues found during test drive.",
   },
 ];

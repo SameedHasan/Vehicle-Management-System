@@ -4,6 +4,7 @@ import { query } from "./db";
 import { redirect } from "next/navigation";
 import bcrypt from "bcrypt";
 import { signIn } from "next-auth/react";
+import { allotment_data, vehicles_data } from "./dummy_data";
 // import { signIn } from "@/auth";
 // import { signIn } from "next-auth/react";
 
@@ -74,5 +75,24 @@ export const authenticate = async (prevState, formData) => {
       return "Wrong Credentials";
     }
     throw err;
+  }
+};
+
+// Vehicles Actions
+export const getVehicleById = async (id) => {
+  try {
+    const vehicle = await vehicles_data.find((vehicle) => vehicle.id == id);
+    return vehicle;
+  } catch (error) {
+    throw new Error("Vehicle not found!");
+  }
+};
+
+export const getVehicleAllotmentById = async (id) => {
+  try {
+    const allotment = await allotment_data.find((allotment) => allotment.vehicle_id == id);
+    return allotment;
+  } catch (error) {
+    throw new Error("Allotment not found!");
   }
 };

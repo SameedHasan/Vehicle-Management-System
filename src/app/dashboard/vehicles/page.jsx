@@ -5,7 +5,10 @@ import React from "react";
 import styles from "@/components/ui/dashboard/users/users.module.css";
 import Search from "@/components/ui/dashboard/search/Search";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
+
 const VehiclesPage = () => {
+  const router = useRouter();
   const vehicleColumns = [
     {
       title: "Make",
@@ -77,9 +80,17 @@ const VehiclesPage = () => {
       </div>
 
       <Table
+        rowClassName="pointer"
         columns={vehicleColumns}
         rowKey={(record) => record.id} // Assuming your API returns a field called 'id'
         dataSource={vehicles_data}
+        onRow={(record, rowIndex) => {
+          return {
+            onClick: (event) => {
+              router.push(`/dashboard/vehicles/${record.id}`);
+            },
+          };
+        }}
         // pagination={tableParams.pagination}
         // loading={loading}
         // onChange={handleTableChange}
