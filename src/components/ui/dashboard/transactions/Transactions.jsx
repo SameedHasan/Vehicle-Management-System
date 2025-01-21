@@ -1,5 +1,6 @@
 import Image from "next/image";
 import styles from "./transactions.module.css";
+import { Tag } from "antd";
 
 const Transactions = () => {
   const vehicleData = [
@@ -67,8 +68,14 @@ const Transactions = () => {
               <td>{vehicle.allotmentDate}</td>
               <td>{vehicle.orderNo}</td>
               <td>
-                <span className={`${styles.status} ${styles[vehicle.status]}`}>{vehicle.status}</span>
-              </td>
+  <Tag
+    className="table-tag"
+                  color={vehicle.status=="done" ? "green" : vehicle.status=="pending" ? "orange" : "red"}
+  >
+    {vehicle.status}
+  </Tag>
+</td>
+              
             </tr>
           ))}
         </tbody>
@@ -78,3 +85,4 @@ const Transactions = () => {
 };
 
 export default Transactions;
+{/* <span className={`${styles.status} ${styles[vehicle.status]}`}></span> */ }
