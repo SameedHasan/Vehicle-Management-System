@@ -92,7 +92,7 @@ export const getVehicleById = async (id) => {
 
 export const getVehicleAllotmentById = async (id) => {
   try {
-    const allotment = await allotment_data.find((allotment) => allotment.vehicle_id == id);
+    const allotment = await FiaData.Allotments.find((allotment) => allotment.vehicle_id == id);
     return allotment;
   } catch (error) {
     throw new Error("Allotment not found!");

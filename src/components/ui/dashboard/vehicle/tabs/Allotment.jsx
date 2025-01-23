@@ -16,7 +16,7 @@ const Allotment = async ({ vehicle_id }) => {
       <h2 className={styles.heading}>Allotment Details</h2>
       <div className={styles.gridContainer}>
         <div className={styles.gridItem}>
-          <strong>Allotment Date:</strong> <span>{allotment.allotment_date}</span>
+          <strong>Allotment Date:</strong> <span>{allotment.date}</span>
         </div>
         <div className={styles.gridItem}>
           <strong>Return Date:</strong> <span>{allotment.return_date ? allotment.return_date : "N/A"}</span>
@@ -25,10 +25,10 @@ const Allotment = async ({ vehicle_id }) => {
           <strong>Allotment Order No:</strong> <span>{allotment.allotment_order_no}</span>
         </div>
         <div className={styles.gridItem}>
-          <strong>Approval Status:</strong> <span>{allotment.approval_status}</span>
+          <strong>Approval Status:</strong> <span>{allotment.status}</span>
         </div>
         <div className={`${styles.gridItem} ${styles.gridItemFullRow}`}>
-          <strong>Comments:</strong> <span>{allotment.comments}</span>
+          <strong>Allottee:</strong> <span>{allotment.allottee}</span>
         </div>
       </div>
     </div>
