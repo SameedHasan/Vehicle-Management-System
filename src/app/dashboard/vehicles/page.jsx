@@ -1,5 +1,5 @@
 "use client";
-import { vehicles_data } from "@/lib/dummy_data";
+import { vehicles_data,FiaData } from "@/lib/dummy_data";
 import { Table, Tag } from "antd";
 import React from "react";
 import styles from "@/components/ui/dashboard/users/users.module.css";
@@ -11,6 +11,11 @@ import { Suspense } from "react";
 const VehiclesPage = () => {
   const router = useRouter();
   const vehicleColumns = [
+    {
+      title: "ID",
+      dataIndex: "id",
+      key: "id",
+    },
     {
       title: "Make",
       dataIndex: "make",
@@ -46,18 +51,18 @@ const VehiclesPage = () => {
       dataIndex: "color",
       key: "color",
     },
-    {
-      title: "Purchase Date",
-      dataIndex: "purchase_date",
-      key: "purchase_date",
-      render: (text) => new Date(text).toLocaleDateString(),
-    },
-    {
-      title: "Price",
-      dataIndex: "price",
-      key: "price",
-      render: (text) => `$${text.toFixed(2)}`,
-    },
+    // {
+    //   title: "Purchase Date",
+    //   dataIndex: "purchase_date",
+    //   key: "purchase_date",
+    //   render: (text) => new Date(text).toLocaleDateString(),
+    // },
+    // {
+    //   title: "Price",
+    //   dataIndex: "price",
+    //   key: "price",
+    //   render: (text) => text? `$${text?.toFixed(2)}`:"500,000.00",
+    // },
     {
       title: "Fuel Capacity (L)",
       dataIndex: "fuel_capacity",
@@ -70,7 +75,7 @@ const VehiclesPage = () => {
       render: (_, record) => {
         return <Tag
           className="table-tag"
-          color={record.status == "allotted" ? "green" : record.status == "pending" ? "orange" : "red"}
+          color={record.status == "Allotted" ? "green" : record.status == "Maintenance" ? "orange" : "red"}
         >
           {record.status}
         </Tag>
@@ -93,7 +98,7 @@ const VehiclesPage = () => {
           rowClassName="pointer"
           columns={vehicleColumns}
           rowKey={(record) => record.id} // Assuming your API returns a field called 'id'
-          dataSource={vehicles_data}
+          dataSource={FiaData.Vehicles}
           onRow={(record, rowIndex) => {
             return {
               onClick: (event) => {
