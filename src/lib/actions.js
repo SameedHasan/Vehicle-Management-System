@@ -4,7 +4,7 @@ import { query } from "./db";
 import { redirect } from "next/navigation";
 import bcrypt from "bcrypt";
 import { signIn } from "next-auth/react";
-import { allotment_data, vehicles_data } from "./dummy_data";
+import { allotment_data, vehicles_data,FiaData } from "./dummy_data";
 // import { signIn } from "@/auth";
 // import { signIn } from "next-auth/react";
 
@@ -81,8 +81,10 @@ export const authenticate = async (prevState, formData) => {
 // Vehicles Actions
 export const getVehicleById = async (id) => {
   try {
-    const vehicle = await vehicles_data.find((vehicle) => vehicle.id == id);
-    return vehicle;
+    const vehicle = await FiaData.Vehicles.find((vehicle) => vehicle.id == id);
+
+    const purchase = await FiaData.Purchase.find((purchase) => purchase.id == vehicle.purchase_id);
+    return { ...vehicle, ...purchase };
   } catch (error) {
     throw new Error("Vehicle not found!");
   }
