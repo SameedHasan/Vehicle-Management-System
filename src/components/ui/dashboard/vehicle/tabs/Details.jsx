@@ -1,8 +1,15 @@
 import { getVehicleById } from "@/lib/actions";
 import React from "react";
 import styles from "./tabs.module.css";
+import { Empty } from "antd";
 const Details = async ({ vehicle_id }) => {
   const vehicle = await getVehicleById(vehicle_id);
+  if (!vehicle) {
+    return <div className={styles.container}>
+      <h2 className={styles.heading}>Vehicle Details</h2>
+      <Empty />
+    </div> 
+  }
   return (
     <div className={styles.container}>
       <h2 className={styles.heading}>Vehicle Details</h2>
