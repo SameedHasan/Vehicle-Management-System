@@ -1,6 +1,6 @@
 "use client";
 import { vehicles_data } from "@/lib/dummy_data";
-import { Table } from "antd";
+import { Table, Tag } from "antd";
 import React from "react";
 import styles from "@/components/ui/dashboard/users/users.module.css";
 import Search from "@/components/ui/dashboard/search/Search";
@@ -67,6 +67,14 @@ const VehiclesPage = () => {
       title: "Status",
       dataIndex: "status",
       key: "status",
+      render: (_, record) => {
+        return <Tag
+          className="table-tag"
+          color={record.status == "allotted" ? "green" : record.status == "pending" ? "orange" : "red"}
+        >
+          {record.status}
+        </Tag>
+      }
     },
   ];
 
